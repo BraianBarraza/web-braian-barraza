@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+const mobileMenuButton = document.getElementById("mobile-menu-button");
+const mobileMenu = document.getElementById("mobile-menu");
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+mobileMenuButton.addEventListener("click", function () {
+  mobileMenu.classList.toggle("hidden");
+});
 
-export default App;
+const header = document.querySelector("header");
+window.addEventListener("scroll", function () {
+  // header.classList.toggle("sticky", window.scrollY > 100);
+
+  if (window.scrollY > 100) {
+    header.classList.toggle("sticky", window.scrollY > 0);
+    header.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+  } else {
+    header.style.backgroundColor = "transparent";
+  }
+});

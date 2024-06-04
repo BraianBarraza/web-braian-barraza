@@ -1,43 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portafolio Web</title>
+    <link href="./output.css" rel="stylesheet">
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+    />
+    <!-- Web Icon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./icons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./icons/favicon-16x16.png"
+    />
+    <link rel="manifest" href="src/icons/site.webmanifest" />
+    <link
+      rel="mask-icon"
+      href="./icons/safari-pinned-tab.svg"
+      color="#5bbad5"
+    />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+    />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
   </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+  <body class="bg-background overflow-x-hidden">
+    <!-- header -->
+    <header
+      class="fixed top-0 right-0 left-0 md:py-1 transition-all duration-300"
+    >
+      <nav
+        class="max-w-7xl mx-auto bg-gray-800 md:bg-transparent p-5 order-[10001]"
+      >
+        <div class="flex items-center justify-between">
+          <a
+            href="/"
+            class="text-white font-bold text-lg flex items-center gap-3"
+            ><img
+              src="./icons/logo-braian.png"
+              alt=""
+              class="w-10 h-10 rounded-2xl"
+            />
+            Web portafolio</a
+          >
+          <!-- only for large device -->
+          <div class="hidden md:flex space-x-10">
+            <a href="#home" class="text-primary hover:text-gray-300">Home</a>
+            <a href="#projects" class="text-white hover:text-gray-300"
+              >Projects</a
+            >
+            <a href="#resume" class="text-white hover:text-gray-300">Resume</a>
+          </div>
+          <!-- menu btn, only disply on mobile -->
+          <div class="md:hidden">
+            <button id="mobile-menu-button" class="text-white text-2xl">
+              <i class="bx bx-menu"></i>
+            </button>
+          </div>
+        </div>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+        <!-- mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+          <a href="#home" class="block text-white py-2 mt-3 hover:bg-gray-700"
+            >Home</a
+          >
+          <a href="#projects" class="block text-white py-2 hover:bg-gray-700"
+            >Projects</a
+          >
+          <a href="#resume" class="block text-white py-2 hover:bg-gray-700"
+            >Resume</a
+          >
+        </div>
+      </nav>
+    </header>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <!-- banner section -->
+    <section class="max-w-7xl mx-auto px-5 my-12" id="home">
+      <div
+        class="flex md:flex-row flex-col justify-between items-center text-white gap-4 py-10"
+      >
+        <div class="md:w-1/2">
+          <p class="text-xl font-medium mb-4">
+            Hello, <span class="text-primary">I'm</span>
+          </p>
+          <h1 class="font-bold text-4xl tracking-[3.22px] mb-5">
+            Braian Barraza
+          </h1>
+          <p class="text-2xl font-montserrat mb-5">Web developer in training</p>
+          <p class="text-xl mb-12 md:w-3/4 text-justify leading-8">
+            I am a fan of programming with a good understanding of HTML and CSS,
+            and I am currently expanding my skills in JavaScript, React, and
+            GitHub.
+          </p>
+          <button class="py-4 px-10 rounded-md bg-primary text-white font-bold">
+            Contact me
+          </button>
+          <!-- social btn -->
+          <div class="mt-12 mb-8 flex gap-4 items-center">
+            <p>Check out My:</p>
+            <div class="flex space-x-3">
+              <a href="https://www.instagram.com/braianbarraza/" target="_blank"
+                ><img src="./icons/instagram.svg" alt="" class="w-8 h-8"
+              /></a>
+              <a
+                href="https://www.linkedin.com/in/braian-barraza-bengal-8071a322b/"
+                target="_blank"
+                ><img src="./icons/linkedIn.svg" alt="" class="w-8 h-8"
+              /></a>
+              <a href="https://github.com/BraianBarraza" target="_blank"
+                ><img src="./icons/github.svg" alt="" class="w-8 h-8"
+              /></a>
+            </div>
+          </div>
+        </div>
+        <div class="md:w-1/2 order-first md:order-none">
+          <img
+            src="./img/Braian-Barraza.png"
+            alt=""
+            class="md:ml-20 w-full"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- About me -->
+    <section class="max-w-7xl mx-auto px-5 my-6 text-white" id="Services">
+      <div class="text-center">
+        <p class="mb-3 font-montserrat font-medium">About me</p>
+        <h3 class="text-primary text-3xl font-bold mb-16">My Know How</h3>
+      </div>
+      <!-- service cards -->
+      <div
+        class="my-16 flex flex-col md:flex-row justify-around items-center gap-12"
+      >
+        <div
+          class="w-[354px] px-5 py-8 rounded-lg border border-primary shadow-[#5dadec3b] cursor-pointer shadow-xl"
+        >
+          <h5 class="text-center my-5 text-2xl">Soft skills</h5>
+          <img
+            src="./img/soft-skills (2).png"
+            alt=""
+            class="w-[196px] mb-15 mx-auto"
+          />
+          <ul class="text-center">
+            <li>Effective</li>
+            <li>Communicative</li>
+            <li>Teamworker</li>
+            <li>Attention to Detail</li>
+            <li>Stress Management</li>
+            <li>Continuous Learning</li>
+          </ul>
+        </div>
+        <div
+          class="w-[354px] px-5 py-8 rounded-lg border border-primary shadow-[#5dadec3b] cursor-pointer shadow-xl"
+        >
+          <h5 class="text-center my-5 text-2xl">Hard skills</h5>
+          <img
+            src="./img/hard-skill.png"
+            alt=""
+            class="w-[196px] mb-15 mx-auto"
+          />
+          <ul class="text-center">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+            <li>React</li>
+            <li>Github</li>
+            <li>Visual Studio Code</li>
+          </ul>
+        </div>
+        <div
+          class="w-[354px] px-5 py-8 rounded-lg border border-primary shadow-[#5dadec3b] cursor-pointer shadow-xl"
+        >
+          <h5 class="text-center my-5 text-2xl">Plans for my future</h5>
+          <img
+            src="./img/future-Plans.png"
+            alt=""
+            class="w-[196px] mb-15 mx-auto"
+          />
+          <p class="text-center">
+            I would like to enhance and complement my programing skills, also
+            reach a diplom as "Fachinformatiker - Anwendungsentwicklung". and
+            subsequently specialize me as front-end web designer.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- projects -->
+    <section class="px-5 my-32 mx-auto max-w-7xl" id="projects">
+      <div class="text-center text-white">
+        <h3 class="text-3xl font-bold mb-5">
+          Recent <span class="text-primary">Projects</span>
+        </h3>
+        <p class="mb-6 md:w-3/4 mx-auto">
+          This project is a showcase of my work and my dedication to continuous
+          learning. My goal is to develop innovative and efficient solutions.
+        </p>
+      </div>
+
+      <div class="container mx-auto flex flex-wrap gap-12 justify-center">
+        <div
+          class="border border-primary shadow-xl shadow-[#5dadec3b] rounded-2xl p-8 max-w-sm w-full"
+        >
+          <h2 class="text-2xl font-bold text-white mb-3">Coffee Blog</h2>
+          <img
+            src="./img/img-blogCafe 03.png"
+            alt="Project 1"
+            class="w-full h-auto rounded-lg mb-4"
+          />
+          <p class="text-white mb-3">
+            A small project made using just HTML and CSS, the main idea of this
+            project was to strengthen my knowledge in these 2. and it is also
+            completly Responsive.
+          </p>
+          <p class="text-white">
+            <strong>Technologies Used:</strong> HTML & CSS
+          </p>
+          <p class="text-white mt-3"><strong>Features:</strong></p>
+          <ul class="list-disc list-inside text-white mb-3">
+            <li>Responsive UI</li>
+          </ul>
+          <p>
+            <a href="#" class="text-blue-500 hover:underline">View Demo</a> |
+            <a href="#" class="text-blue-500 hover:underline">GitHub</a>
+          </p>
+        </div>
+        <div
+          class="border border-primary shadow-[#5dadec3b] rounded-2xl shadow-lg p-8 max-w-sm w-full"
+        >
+          <h2 class="text-2xl font-bold text-white mb-3">Simple Co-working</h2>
+          <img
+            src="./img/co-working.png"
+            alt="Project 1"
+            class="w-full h-auto rounded-lg mb-4"
+          />
+          <p class="text-white mb-3">
+            The project I am currently working on. the website of a coworking company, with an agenda system and purchase of plans. 
+          </p>
+          <p class="text-white">
+            <strong>Technologies Used:</strong> HTML, CSS, Javascript and React
+          </p>
+          <p class="text-white mt-3"><strong>Features:</strong></p>
+          <ul class="list-disc list-inside text-white mb-3">
+            <li>Responsive UI</li>
+          </ul>
+          <p>
+            <a href="#" class="text-blue-500 hover:underline">View Demo</a> |
+            <a href="#" class="text-blue-500 hover:underline">GitHub</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact  -->
+    <section class="my-16 max-w-7xl mx-auto" id="resume">
+      <div class="text-center">
+        <p class="mb-3 font-montserrat font-medium text-white">
+          Send me an E-mail if you need more information
+        </p>
+        <h3 class="text-primary text-3xl font-bold mb-16">Contact me</h3>
+      </div>
+
+      <div class="container mx-auto flex flex-wrap gap-6 justify-center">
+        <div
+          class="border border-primary shadow-[#5dadec3b] bg-background rounded-lg shadow-lg p-6 max-w-sm w-full"
+        >
+          <h2 class="text-2xl font-bold text-white mb-3">Contact Me</h2>
+          <form action="send_email.php" method="POST" class="space-y-4">
+            <div>
+              <label for="name" class="block text-white">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="w-full px-3 py-2 border rounded-lg"
+              />
+            </div>
+            <div>
+              <label for="email" class="block text-white">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full px-3 py-2 border rounded-lg"
+              />
+            </div>
+            <div>
+              <label for="message" class="block text-white">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                required
+                class="w-full px-3 py-2 border rounded-lg"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="py-2 px-4 rounded-md bg-primary text-white font-bold"
+            >
+              Send
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+<!-- Footer -->
+<footer class="bg-gray-800 p-5">
+  <div class="text-white w-full max-w-screen-xl mx-auto md:py-8">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 md:space-x-6">
+      <a href="#" class="flex items-center space-x-3 py-4 rtl:space-x-reverse">
+        <img src="./icons/logo-braian.png" class="h-8 rounded-2xl" alt="Braian Barraza Logo" />
+        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Braian Barraza</span>
+      </a>
+      <ul class="flex flex-col md:flex-row md:space-x-7 space-y-2 md:space-y-0 items-center text-base font-medium">
+        <li>
+          <p class="p-2">E-Mail: Braian_019@hotmail.com</p>
+        </li>
+        <li>
+          <p class="p-2">Tel: 017677668526</p>
+        </li>
+        <li class="p-2">
+          <a href="./img/CV Braian Camilo Barraza.pdf" download>
+            <button class="py-2 px-4 rounded-md bg-primary text-white font-bold">Download CV</button>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+    <hr class="my-6 border-gray-200 dark:border-gray-700 lg:my-8" />
+    <span class="block text-sm text-gray-500 text-center dark:text-gray-400">© 2024 <a href="#" class="hover:underline">Braian Barraza™</a>. All Rights Reserved.</span>
+  </div>
+</footer>
+</body>
+</html>
+
+    <!-- script tags -->
+    <script src="src/App.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
   </body>
 </html>
