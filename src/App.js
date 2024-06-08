@@ -16,3 +16,9 @@ window.addEventListener("scroll", function () {
     header.style.backgroundColor = "transparent";
   }
 });
+
+const btnTheme = document.getElementById("themeButton");
+
+btnTheme.addEventListener("Click", () => {
+  document.body.classList.toggle("light");
+});

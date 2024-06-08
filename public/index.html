@@ -44,6 +44,7 @@
     <meta name="theme-color" content="#ffffff" />
   </head>
   <body class="bg-background overflow-x-hidden">
+    <div>
     <!-- header -->
     <header
       class="fixed top-0 right-0 left-0 md:py-1 transition-all duration-300"
@@ -69,6 +70,10 @@
               >Projects</a
             >
             <a href="#resume" class="text-white hover:text-gray-300">Resume</a>
+            <label class="inline-flex items-center cursor-pointer">
+              <input id='themeButton' type="checkbox" value="" class="sr-only peer" checked>
+              <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+            </label>
           </div>
           <!-- menu btn, only disply on mobile -->
           <div class="md:hidden">
@@ -89,6 +94,7 @@
           <a href="#resume" class="block text-white py-2 hover:bg-gray-700"
             >Resume</a
           >
+
         </div>
       </nav>
     </header>
@@ -327,6 +333,7 @@
         </div>
       </div>
     </section>
+  </div>
 
 <!-- Footer -->
 <footer class="bg-gray-800 p-5">
@@ -355,8 +362,6 @@
     <span class="block text-sm text-gray-500 text-center dark:text-gray-400">© 2024 <a href="#" class="hover:underline">Braian Barraza™</a>. All Rights Reserved.</span>
   </div>
 </footer>
-</body>
-</html>
 
     <!-- script tags -->
     <script src="src/App.js"></script>
