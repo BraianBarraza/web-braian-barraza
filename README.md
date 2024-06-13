@@ -15,17 +15,17 @@ This project is a professional website that serves as a portfolio to showcase my
 To get started with and explore this project locally, follow these steps:
 
 1. **Clone the repository**:
-   ´´´in your terminal
+   in your terminal:
    git clone https://github.com/BraianBarraza/web-braian-barraza.git
 
 2. **Install dependencies**:
    npm install
    
 4. **Install Tailwind CSS and Flowbite**:
-   https://tailwindcss.com/docs/installation
-   https://flowbite.com/docs/getting-started/quickstart/
+   - https://tailwindcss.com/docs/installation .
+   - https://flowbite.com/docs/getting-started/quickstart/ .
 
-   ##Help
+## Help
 If you have any questions or need help with the project, you can contact me via:
 
 Email: Braian_019@hotmail.com
