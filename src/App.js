@@ -22,3 +22,9 @@ const btnTheme = document.getElementById("themeButton");
 btnTheme.addEventListener("Click", () => {
   document.body.classList.toggle("light");
 });
+
+/* const button = document.getElemtenById('change-color-button');
+   button.addEventListener('click', () => {
+   document.body.style.backgroundColor = document.body.style.backgroundColor === 'black' ? 'white' : 'black';
+        });
+}*/
