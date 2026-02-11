@@ -50,7 +50,7 @@ const App = () => {
     return () => observer.disconnect();
   }, []);
 
-  const assetsBase = useMemo(() => process.env.PUBLIC_URL || "", []);
+  const assetsBase = useMemo(() => import.meta.env.BASE_URL || "/", []);
 
   return (
     <div className="bg-white text-gray-900 dark:bg-background dark:text-white min-h-screen transition-colors duration-300">
