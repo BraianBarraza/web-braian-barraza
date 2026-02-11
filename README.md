@@ -30,4 +30,3 @@ If you have any questions or need help with the project, you can contact me via:
 
 Email: Braian_019@hotmail.com
 Phone: +49 17677668526
-Additionally, you can open an issue on the GitHub repository to discuss any problems or suggestions.

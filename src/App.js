@@ -1,30 +1,79 @@
-const mobileMenuButton = document.getElementById("mobile-menu-button");
-const mobileMenu = document.getElementById("mobile-menu");
+import React, { useEffect, useMemo, useState } from "react";
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import About from "./components/About";
+import Projects from "./components/Projects";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
 
-mobileMenuButton.addEventListener("click", function () {
-  mobileMenu.classList.toggle("hidden");
-});
+const App = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isLight, setIsLight] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
-const header = document.querySelector("header");
-window.addEventListener("scroll", function () {
-  // header.classList.toggle("sticky", window.scrollY > 100);
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 100);
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-  if (window.scrollY > 100) {
-    header.classList.toggle("sticky", window.scrollY > 0);
-    header.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-  } else {
-    header.style.backgroundColor = "transparent";
-  }
-});
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", !isLight);
+  }, [isLight]);
 
-const btnTheme = document.getElementById("themeButton");
+  useEffect(() => {
+    const sections = ["home", "projects", "resume"]
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
 
-btnTheme.addEventListener("Click", () => {
-  document.body.classList.toggle("light");
-});
+    if (sections.length === 0) return undefined;
 
-/* const button = document.getElemtenById('change-color-button');
-   button.addEventListener('click', () => {
-   document.body.style.backgroundColor = document.body.style.backgroundColor === 'black' ? 'white' : 'black';
-        });
-}*/
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) {
+          setActiveSection(visible[0].target.id);
+        }
+      },
+      {
+        root: null,
+        rootMargin: "-40% 0px -40% 0px",
+        threshold: [0.1, 0.25, 0.5, 0.75],
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  const assetsBase = useMemo(() => process.env.PUBLIC_URL || "", []);
+
+  return (
+    <div className="bg-white text-gray-900 dark:bg-background dark:text-white min-h-screen transition-colors duration-300">
+      <Header
+        assetsBase={assetsBase}
+        isMenuOpen={isMenuOpen}
+        isScrolled={isScrolled}
+        isLight={isLight}
+        activeSection={activeSection}
+        onToggleMenu={() => setIsMenuOpen((prev) => !prev)}
+        onToggleTheme={setIsLight}
+        onSelectSection={(sectionId) => {
+          setActiveSection(sectionId);
+          setIsMenuOpen(false);
+        }}
+      />
+      <Hero assetsBase={assetsBase} />
+      <About assetsBase={assetsBase} />
+      <Projects assetsBase={assetsBase} />
+      <Contact />
+      <Footer assetsBase={assetsBase} />
+    </div>
+  );
+};
+
+export default App;
