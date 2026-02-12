@@ -1,6 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600&family=Open+Sans:wght@300;400;500;600;700;800&display=swap");
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: #0872BF;
+  --color-background: #141A1A;
+  --font-sans: "Open Sans", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-montserrat: "Montserrat", sans-serif;
+  --drop-shadow-3xl: 0 4px 20px rgba(93, 173, 236, 0.23);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 header {
   z-index: 10001;
+}
+
+section {
+  scroll-margin-top: 5rem;
 }

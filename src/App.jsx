@@ -1,10 +1,12 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+
+const SECTIONS = ["home", "about", "projects", "contact"];
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,7 +26,7 @@ const App = () => {
   }, [isLight]);
 
   useEffect(() => {
-    const sections = ["home", "projects", "resume"]
+    const sections = SECTIONS
       .map((id) => document.getElementById(id))
       .filter(Boolean);
 
@@ -50,7 +52,12 @@ const App = () => {
     return () => observer.disconnect();
   }, []);
 
-  const assetsBase = useMemo(() => import.meta.env.BASE_URL || "/", []);
+  const assetsBase = useMemo(
+    () => (import.meta.env.BASE_URL || "/").replace(/\/$/, ""),
+    []
+  );
+
+  const closeMenu = useCallback(() => setIsMenuOpen(false), []);
 
   return (
     <div className="bg-white text-gray-900 dark:bg-background dark:text-white min-h-screen transition-colors duration-300">
@@ -66,6 +73,7 @@ const App = () => {
           setActiveSection(sectionId);
           setIsMenuOpen(false);
         }}
+        onCloseMenu={closeMenu}
       />
       <Hero assetsBase={assetsBase} />
       <About assetsBase={assetsBase} />

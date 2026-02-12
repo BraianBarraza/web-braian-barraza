@@ -1,4 +1,4 @@
-import React from "react";
+import { socialLinks } from "../data/socialLinks";
 
 const Hero = ({ assetsBase }) => (
   <section className="max-w-7xl mx-auto px-5 my-12" id="home">
@@ -18,45 +18,29 @@ const Hero = ({ assetsBase }) => (
           and I am currently expanding my skills in JavaScript, React, and
           GitHub.
         </p>
-        <button className="py-4 px-10 rounded-md bg-primary text-white font-bold">
+        <a
+          href="#contact"
+          className="py-4 px-10 rounded-md bg-primary text-white font-bold inline-block"
+        >
           Contact me
-        </button>
+        </a>
         <div className="mt-12 mb-8 flex gap-4 items-center">
           <p className="text-gray-700 dark:text-gray-200">Check out My:</p>
           <div className="flex space-x-3">
-            <a
-              href="https://www.instagram.com/braianbarraza/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img
-                src={`${assetsBase}/icons/instagram.svg`}
-                alt="Instagram"
-                className="w-8 h-8"
-              />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/braian-barraza-bengal-8071a322b/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img
-                src={`${assetsBase}/icons/linkedIn.svg`}
-                alt="LinkedIn"
-                className="w-8 h-8"
-              />
-            </a>
-            <a
-              href="https://github.com/BraianBarraza"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img
-                src={`${assetsBase}/icons/github.svg`}
-                alt="GitHub"
-                className="w-8 h-8"
-              />
-            </a>
+            {socialLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img
+                  src={`${assetsBase}${link.icon}`}
+                  alt={link.name}
+                  className="w-8 h-8"
+                />
+              </a>
+            ))}
           </div>
         </div>
       </div>
@@ -65,6 +49,7 @@ const Hero = ({ assetsBase }) => (
           src={`${assetsBase}/img/Braian-Barraza.png`}
           alt="Braian Barraza"
           className="md:ml-20 w-full"
+          loading="lazy"
         />
       </div>
     </div>

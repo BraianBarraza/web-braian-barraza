@@ -1,4 +1,11 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const NAV_LINKS = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "projects", label: "Projects" },
+  { id: "contact", label: "Contact" },
+];
 
 const Header = ({
   assetsBase,
@@ -9,22 +16,15 @@ const Header = ({
   onToggleMenu,
   onToggleTheme,
   onSelectSection,
+  onCloseMenu,
 }) => {
   const linkRefs = useRef({});
+  const navRef = useRef(null);
   const [indicatorStyle, setIndicatorStyle] = useState({
     left: 0,
     width: 0,
     opacity: 0,
   });
-
-  const navLinks = useMemo(
-    () => [
-      { id: "home", label: "Home" },
-      { id: "projects", label: "Projects" },
-      { id: "resume", label: "Resume" },
-    ],
-    []
-  );
 
   useEffect(() => {
     const updateIndicator = () => {
@@ -49,6 +49,27 @@ const Header = ({
     return () => window.removeEventListener("resize", updateIndicator);
   }, [activeSection]);
 
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    const handleClickOutside = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) {
+        onCloseMenu();
+      }
+    };
+
+    const handleEscape = (e) => {
+      if (e.key === "Escape") onCloseMenu();
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [isMenuOpen, onCloseMenu]);
+
   return (
     <header
       className={`fixed top-0 right-0 left-0 transition-all duration-300 ${
@@ -57,10 +78,10 @@ const Header = ({
           : "bg-transparent"
       }`}
     >
-      <nav className="max-w-7xl mx-auto p-5 order-[10001]">
+      <nav ref={navRef} className="max-w-7xl mx-auto p-5">
         <div className="flex items-center justify-between">
           <a
-            href="/"
+            href="#home"
             className="text-gray-900 dark:text-white font-bold text-lg flex items-center gap-3"
           >
             <img
@@ -78,7 +99,7 @@ const Header = ({
                 style={indicatorStyle}
                 aria-hidden="true"
               />
-              {navLinks.map((link) => (
+              {NAV_LINKS.map((link) => (
                 <a
                   key={link.id}
                   href={`#${link.id}`}
@@ -129,7 +150,7 @@ const Header = ({
             isMenuOpen ? "block" : "hidden"
           } md:hidden mt-2 rounded-lg bg-white/95 dark:bg-gray-900`}
         >
-          {navLinks.map((link) => (
+          {NAV_LINKS.map((link) => (
             <a
               key={link.id}
               href={`#${link.id}`}
