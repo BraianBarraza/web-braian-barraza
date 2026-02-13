@@ -1,32 +1,91 @@
-# My Professional Website
+# Braian Barraza - Web Portfolio
 
-## Description
+A modern, responsive portfolio website built with **React 19**, **Vite 7**, and **Tailwind CSS 4**. Features dark/light theme switching, smooth scroll navigation, and a component-based architecture.
 
-This project is a professional website that serves as a portfolio to showcase my skills and projects. It is built using HTML, CSS, and currently, I am learning and implementing GitHub, React, JavaScript and Tailwind CSS.
+**[Live Demo](#)** · **[Report Bug](https://github.com/BraianBarraza/web-braian-barraza/issues)**
 
-## Why is this project useful?
+## Tech Stack
 
-- **Showcase Skills**: Allows recruiters to see firsthand my web development skills and the technologies I am proficient with.
-- **Continuous Development**: The project is constantly evolving as I learn new technologies and improve my skills.
-- **Professional Visibility**: Facilitates potential employers to learn more about my professional profile and my projects.
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| React | 19.1.1 | UI library |
+| Vite | 7.1.4 | Build tool & dev server |
+| Tailwind CSS | 4.1.12 | Utility-first styling |
+| PostCSS | 8.5.6 | CSS processing |
 
 ## Getting Started
 
-To get started with and explore this project locally, follow these steps:
+### Prerequisites
 
-1. **Clone the repository**:
-   in your terminal:
-   git clone https://github.com/BraianBarraza/web-braian-barraza.git
+- **Node.js** >= 18
+- **npm** >= 9
 
-2. **Install dependencies**:
-   npm install
-   
-4. **Install Tailwind CSS and Flowbite**:
-   - https://tailwindcss.com/docs/installation .
-   - https://flowbite.com/docs/getting-started/quickstart/ .
+### Installation
 
-## Help
-If you have any questions or need help with the project, you can contact me via:
+```bash
+git clone https://github.com/BraianBarraza/web-braian-barraza.git
+cd web-braian-barraza
+npm install
+```
 
-Email: Braian_019@hotmail.com
-Phone: +49 17677668526
+### Development
+
+```bash
+npm run dev
+```
+
+Opens at [http://localhost:5173](http://localhost:5173) with hot module replacement.
+
+### Production Build
+
+```bash
+npm run build
+npm run preview
+```
+
+Output is generated in the `dist/` directory.
+
+## Project Structure
+
+```
+src/
+├── main.jsx               # App entry point
+├── App.jsx                # Root component & state management
+├── input.css              # Tailwind v4 config & global styles
+├── data/
+│   ├── projects.js        # Portfolio projects
+│   ├── skills.js          # Skills & expertise
+│   └── socialLinks.js     # Social media links
+└── components/
+    ├── Header.jsx         # Navigation & theme toggle
+    ├── Hero.jsx           # Landing section
+    ├── About.jsx          # Skills showcase
+    ├── Projects.jsx       # Project cards
+    ├── Contact.jsx        # Contact form
+    ├── Card.jsx           # Reusable card component
+    └── Footer.jsx         # Footer with contact info
+```
+
+> For detailed architecture documentation, see [DOCS.md](./DOCS.md).
+
+## Features
+
+- **Dark / Light Theme** — class-based toggle with persistent UI state
+- **Responsive Design** — mobile-first layout with hamburger menu
+- **Smooth Scroll Navigation** — animated section indicator in header
+- **Intersection Observer** — auto-highlights active nav section on scroll
+- **Data-Driven Content** — projects, skills, and links managed from `src/data/`
+- **Lazy Loading** — deferred image loading for better performance
+- **SEO Ready** — Open Graph meta tags included
+
+## Contact
+
+**Braian Barraza** — Web Developer
+
+- Email: Braian_019@hotmail.com
+- LinkedIn: [braian-barraza-bengal](https://www.linkedin.com/in/braian-barraza-bengal-8071a322b/)
+- GitHub: [BraianBarraza](https://github.com/BraianBarraza)
+
+## License
+
+This project is for personal/portfolio use. All rights reserved.

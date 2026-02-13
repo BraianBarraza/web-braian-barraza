@@ -13,10 +13,12 @@ const Header = ({
   isScrolled,
   isLight,
   activeSection,
+  user,
   onToggleMenu,
   onToggleTheme,
   onSelectSection,
   onCloseMenu,
+  onAuthAction,
 }) => {
   const linkRefs = useRef({});
   const navRef = useRef(null);
@@ -128,9 +130,23 @@ const Header = ({
               />
               <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
             </label>
+            <button
+              onClick={onAuthAction}
+              className="text-gray-800 dark:text-white hover:text-primary transition-colors text-2xl"
+              aria-label={user ? "Admin panel" : "Sign in"}
+            >
+              <i className={`bx ${user ? "bx-grid-alt" : "bx-log-in"}`}></i>
+            </button>
           </div>
 
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-4">
+            <button
+              onClick={onAuthAction}
+              className="text-gray-900 dark:text-white hover:text-primary transition-colors text-2xl"
+              aria-label={user ? "Admin panel" : "Sign in"}
+            >
+              <i className={`bx ${user ? "bx-grid-alt" : "bx-log-in"}`}></i>
+            </button>
             <button
               id="mobile-menu-button"
               className="text-gray-900 dark:text-white text-2xl"

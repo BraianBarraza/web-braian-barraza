@@ -6,7 +6,7 @@ export const skills = [
     items: ["Java", "PHP", "JavaScript"],
   },
   {
-    title: "Hard Skills",
+    title: "Frameworks and tools",
     image: "/img/hard-skill.png",
     alt: "Frameworks and tools",
     items: [

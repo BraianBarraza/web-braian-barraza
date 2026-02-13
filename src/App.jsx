@@ -1,10 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./lib/firebase";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import Login from "./components/Login";
+import AdminPanel from "./components/AdminPanel";
 
 const SECTIONS = ["home", "about", "projects", "contact"];
 
@@ -13,6 +17,16 @@ const App = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLight, setIsLight] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    return onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+      if (!firebaseUser) setIsAdminOpen(false);
+    });
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 100);
@@ -59,6 +73,14 @@ const App = () => {
 
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
 
+  const handleAuthAction = useCallback(() => {
+    if (user) {
+      setIsAdminOpen(true);
+    } else {
+      setIsLoginOpen(true);
+    }
+  }, [user]);
+
   return (
     <div className="bg-white text-gray-900 dark:bg-background dark:text-white min-h-screen transition-colors duration-300">
       <Header
@@ -67,6 +89,7 @@ const App = () => {
         isScrolled={isScrolled}
         isLight={isLight}
         activeSection={activeSection}
+        user={user}
         onToggleMenu={() => setIsMenuOpen((prev) => !prev)}
         onToggleTheme={setIsLight}
         onSelectSection={(sectionId) => {
@@ -74,7 +97,17 @@ const App = () => {
           setIsMenuOpen(false);
         }}
         onCloseMenu={closeMenu}
+        onAuthAction={handleAuthAction}
       />
+      {isLoginOpen && (
+        <Login
+          onClose={() => setIsLoginOpen(false)}
+          onSuccess={() => setIsAdminOpen(true)}
+        />
+      )}
+      {isAdminOpen && user && (
+        <AdminPanel onClose={() => setIsAdminOpen(false)} />
+      )}
       <Hero assetsBase={assetsBase} />
       <About assetsBase={assetsBase} />
       <Projects assetsBase={assetsBase} />
