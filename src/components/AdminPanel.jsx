@@ -59,6 +59,14 @@ const AdminPanel = ({ onClose }) => {
     return () => document.removeEventListener("keydown", handleEscape);
   }, [formOpen]);
 
+  useEffect(() => {
+    return () => {
+      if (imagePreview?.startsWith("blob:")) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
   const closeForm = () => {
     setFormOpen(false);
     setEditingId(null);

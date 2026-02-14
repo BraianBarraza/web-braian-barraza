@@ -46,65 +46,68 @@ const Projects = ({ assetsBase }) => {
       </div>
 
       <div className="container mx-auto flex flex-wrap gap-12 justify-center">
-        {projects.map((project) => (
-          <Card
-            key={project.id || project.title}
-            className="max-w-sm w-full rounded-2xl p-8"
-          >
-            <h2 className="text-2xl font-bold mb-3">{project.title}</h2>
-            {getImageSrc(project) && (
-              <img
-                src={getImageSrc(project)}
-                alt={project.alt || project.title}
-                className="w-full h-auto rounded-lg mb-4"
-                loading="lazy"
-              />
-            )}
-            <p className="mb-3 text-gray-700 dark:text-gray-200">
-              {project.description}
-            </p>
-            <p>
-              <strong>Technologies Used:</strong> {project.technologies}
-            </p>
-            {project.features?.length > 0 && (
-              <>
-                <p className="mt-3">
-                  <strong>Features:</strong>
-                </p>
-                <ul className="list-disc list-inside mb-3 text-gray-700 dark:text-gray-200">
-                  {project.features.map((feature) => (
-                    <li key={feature}>{feature}</li>
-                  ))}
-                </ul>
-              </>
-            )}
-            {(project.demoUrl || project.githubUrl) && (
-              <p>
-                {project.demoUrl && (
-                  <a
-                    href={project.demoUrl}
-                    className="text-blue-600 hover:underline"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    View Demo
-                  </a>
-                )}
-                {project.demoUrl && project.githubUrl && " | "}
-                {project.githubUrl && (
-                  <a
-                    href={project.githubUrl}
-                    className="text-blue-600 hover:underline"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    GitHub
-                  </a>
-                )}
+        {projects.map((project) => {
+          const imageSrc = getImageSrc(project);
+          return (
+            <Card
+              key={project.id || project.title}
+              className="max-w-sm w-full rounded-2xl p-8"
+            >
+              <h2 className="text-2xl font-bold mb-3">{project.title}</h2>
+              {imageSrc && (
+                <img
+                  src={imageSrc}
+                  alt={project.alt || project.title}
+                  className="w-full h-auto rounded-lg mb-4"
+                  loading="lazy"
+                />
+              )}
+              <p className="mb-3 text-gray-700 dark:text-gray-200">
+                {project.description}
               </p>
-            )}
-          </Card>
-        ))}
+              <p>
+                <strong>Technologies Used:</strong> {project.technologies}
+              </p>
+              {project.features?.length > 0 && (
+                <>
+                  <p className="mt-3">
+                    <strong>Features:</strong>
+                  </p>
+                  <ul className="list-disc list-inside mb-3 text-gray-700 dark:text-gray-200">
+                    {project.features.map((feature) => (
+                      <li key={feature}>{feature}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              {(project.demoUrl || project.githubUrl) && (
+                <p>
+                  {project.demoUrl && (
+                    <a
+                      href={project.demoUrl}
+                      className="text-blue-600 hover:underline"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      View Demo
+                    </a>
+                  )}
+                  {project.demoUrl && project.githubUrl && " | "}
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      className="text-blue-600 hover:underline"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      GitHub
+                    </a>
+                  )}
+                </p>
+              )}
+            </Card>
+          );
+        })}
       </div>
     </section>
   );
