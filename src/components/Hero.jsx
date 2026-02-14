@@ -1,7 +1,7 @@
 import { socialLinks } from "../data/socialLinks";
 
 const Hero = ({ assetsBase }) => (
-  <section className="max-w-7xl mx-auto px-5 my-12" id="home">
+  <section className="max-w-7xl mx-auto px-5" id="home">
     <div className="flex md:flex-row flex-col justify-between items-center gap-4 py-10">
       <div className="md:w-1/2">
         <p className="text-xl font-medium mb-4 text-gray-700 dark:text-gray-200">
@@ -46,9 +46,9 @@ const Hero = ({ assetsBase }) => (
       </div>
       <div className="md:w-1/2 order-first md:order-none">
         <img
-          src={`${assetsBase}/img/Braian-Barraza.png`}
+          src={`${assetsBase}/img/3d_character_blue_nobg.png`}
           alt="Braian Barraza"
-          className="md:ml-20 w-full"
+          className="w-2/3 pt-10 mx-auto"
           loading="lazy"
         />
       </div>
