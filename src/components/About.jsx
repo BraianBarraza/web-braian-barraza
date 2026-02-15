@@ -11,7 +11,7 @@ const About = ({ assetsBase }) => (
     </div>
     <div className="my-16 flex flex-col md:flex-row justify-around items-center gap-12">
       {skills.map((skill) => (
-        <Card key={skill.title} className="w-[354px] px-5 py-8 rounded-lg cursor-pointer">
+        <Card key={skill.title} className="w-[354px] min-h-135 px-5 py-8 rounded-lg cursor-pointer">
           <h5 className="text-center my-5 text-2xl">{skill.title}</h5>
           <img
             src={`${assetsBase}${skill.image}`}

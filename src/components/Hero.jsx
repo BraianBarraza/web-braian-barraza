@@ -1,9 +1,9 @@
 import { socialLinks } from "../data/socialLinks";
 
 const Hero = ({ assetsBase }) => (
-  <section className="max-w-7xl mx-auto px-5" id="home">
+  <section className="max-w-7xl mx-auto pt-10 px-5" id="home">
     <div className="flex md:flex-row flex-col justify-between items-center gap-4 py-10">
-      <div className="md:w-1/2">
+      <div className="md:w-1/2 pt-10">
         <p className="text-xl font-medium mb-4 text-gray-700 dark:text-gray-200">
           Hello, <span className="text-primary">I'm</span>
         </p>
