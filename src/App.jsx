@@ -108,7 +108,7 @@ const App = () => {
       {isAdminOpen && user && (
         <AdminPanel onClose={() => setIsAdminOpen(false)} />
       )}
-      <Hero assetsBase={assetsBase} />
+      <Hero assetsBase={assetsBase} isLight={isLight} />
       <About assetsBase={assetsBase} />
       <Projects assetsBase={assetsBase} />
       <Contact />

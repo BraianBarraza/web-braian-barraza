@@ -31,7 +31,7 @@ const Contact = () => {
       </div>
 
       <div className="container mx-auto flex flex-wrap gap-6 justify-center">
-        <div className="border border-primary shadow-[#5dadec3b] rounded-lg shadow-lg p-6 max-w-sm w-full bg-white/70 dark:bg-background">
+        <div className="border border-primary shadow-[0_4px_20px_var(--color-primary-shadow)] rounded-lg p-6 max-w-sm w-full bg-white/70 dark:bg-background">
           <h2 className="text-2xl font-bold mb-3">Contact Me</h2>
           {submitted && (
             <p className="mb-4 text-green-600 dark:text-green-400 font-medium">

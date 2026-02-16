@@ -4,12 +4,25 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-primary: #0872BF;
+  --color-primary: #FF6A3A;
   --color-background: #141A1A;
   --font-sans: "Open Sans", sans-serif;
   --font-inter: "Inter", sans-serif;
   --font-montserrat: "Montserrat", sans-serif;
-  --drop-shadow-3xl: 0 4px 20px rgba(93, 173, 236, 0.23);
+  --drop-shadow-3xl: 0 4px 20px rgba(255, 138, 97, 0.23);
+}
+
+:root {
+  --color-primary-soft: #FF8A61;
+  --color-primary-shadow: rgba(255, 138, 97, 0.23);
+  --color-primary-glow: rgba(255, 106, 58, 0.7);
+}
+
+.dark {
+  --color-primary: #0872BF;
+  --color-primary-soft: #5dadec;
+  --color-primary-shadow: rgba(93, 173, 236, 0.23);
+  --color-primary-glow: rgba(8, 114, 191, 0.7);
 }
 
 html {
