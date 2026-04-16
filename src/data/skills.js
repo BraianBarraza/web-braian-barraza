@@ -14,8 +14,8 @@ export const skills = [
             "Symfony",
             "Java",
             "Restful API",
-            "GitHub",
-            "Postman",
+            "SQL",
+            "MongoDB",
         ],
     },
     {
@@ -23,6 +23,6 @@ export const skills = [
         image: "/img/future-Plans.png",
         alt: "Future plans",
         description:
-            'Currently working by SHD Andernach as "Fachinformatiker - Anwendungsentwicklung", and subsequently specialize me as frontend and backend developer.',
+            "I am currently doing my Ausbildung as an Anwendungsentwickler at SHD Andernach and continuing to grow as both a frontend and backend developer.",
     },
 ];

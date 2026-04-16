@@ -16,12 +16,12 @@ const Hero = ({assetsBase, isLight}) => {
                         Braian Barraza
                     </h1>
                     <p className="text-2xl font-montserrat mb-5">
-                        Web developer in training
+                        Apprentice Application Developer at SHD Andernach
                     </p>
                     <p className="text-xl mb-12 md:w-3/4 text-justify leading-8 text-gray-700 dark:text-gray-200">
-                        I am a fan of programming with a good understanding of HTML and CSS,
-                        and I am currently expanding my skills in JavaScript, React, and
-                        GitHub.
+                        I am currently completing my apprenticeship as an Application Developer at SHD Andernach. 
+                        My main focus is frontend development, especially with JavaScript, and I also have solid backend experience working with PHP and Java. 
+                        I am familiar with modern development tools and collaborative workflows, including IntelliJ IDEA, PhpStorm, GitHub, GitLab, and agile project management with Jira.
                     </p>
                     <a
                         href="#contact"
