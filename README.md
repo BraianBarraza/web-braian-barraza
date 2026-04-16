@@ -2,7 +2,7 @@
 
 A modern, responsive portfolio website built with **React 19**, **Vite 7**, and **Tailwind CSS 4**. Features dark/light theme switching, smooth scroll navigation, and a component-based architecture.
 
-**[Live Demo](#)** · **[Report Bug](https://github.com/BraianBarraza/web-braian-barraza/issues)**
+**[Live Page](https://braianbarraza.com)** · **[Report Bug](https://github.com/BraianBarraza/web-braian-barraza/issues)**
 
 ## Tech Stack
 
