@@ -85,8 +85,9 @@ Manages all application-level state and passes it down via props.
 
 ### `Projects.jsx` — Portfolio Section
 
-- Renders project cards from `src/data/projects.js`
+- Renders project cards from Firestore
 - Uses the reusable `Card` component
+- Opens a full-screen project detail view when a project card is selected
 - Demo/GitHub links render conditionally (only if URLs are provided)
 
 ### `Contact.jsx` — Contact Form
@@ -173,24 +174,8 @@ Loaded via Google Fonts CDN in `input.css`:
 
 ## Data Layer
 
-Content is separated from components in `src/data/`:
-
-### `projects.js`
-
-```js
-export const projects = [
-  {
-    title: "Project Name",
-    image: "/img/screenshot.png",   // path relative to public/
-    alt: "Alt text for image",
-    description: "Project description.",
-    technologies: "HTML, CSS, React",
-    features: ["Feature 1", "Feature 2"],
-    demoUrl: "https://..." | null,   // null = link hidden
-    githubUrl: "https://..." | null,
-  },
-];
-```
+Project content is managed from the admin panel and stored in Firestore.
+Project images are uploaded to Firebase Storage.
 
 ### `skills.js`
 
@@ -225,14 +210,14 @@ export const socialLinks = [
 
 ### Add a New Project
 
-1. Place the screenshot in `public/img/`
-2. Add an entry to `src/data/projects.js`:
+1. Open the admin panel.
+2. Create a project with this data shape:
 
 ```js
 {
   title: "My New Project",
-  image: "/img/my-project.png",
-  alt: "My New Project screenshot",
+  imageUrl: "https://...", // generated after upload
+  imagePath: "projects/my-project.png",
   description: "What this project does.",
   technologies: "React, Node.js",
   features: ["Responsive", "Dark mode"],
