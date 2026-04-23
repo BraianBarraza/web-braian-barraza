@@ -1,28 +1,35 @@
 export const skills = [
-    {
-        title: "Frontend",
-        image: "/img/soft-skills (2).png",
-        alt: "Frontend skills",
-        items: ["HTML", "CSS", "TWIG", "Tailwind", "Bootstrap", "Vue (Options API)", "React"],
-    },
-    {
-        title: "Backend and Tools",
-        image: "/img/hard-skill.png",
-        alt: "Backend skills",
-        items: [
-            "PHP",
-            "Symfony",
-            "Java",
-            "Restful API",
-            "SQL",
-            "MongoDB",
-        ],
-    },
-    {
-        title: "Plans for my future",
-        image: "/img/future-Plans.png",
-        alt: "Future plans",
-        description:
-            "I am currently doing my Ausbildung as an Anwendungsentwickler at SHD Andernach and continuing to grow as both a frontend and backend developer.",
-    },
+  {
+    title: "Frontend",
+    image: "/img/frontend.png",
+    alt: "Frontend development illustration",
+    accent: "from-cyan-300",
+    description: "Building responsive, accessible, and visually rich interfaces.",
+    items: ["HTML", "CSS", "TWIG", "Tailwind", "Bootstrap", "Vue", "React"],
+  },
+  {
+    title: "Backend",
+    image: "/img/backend.png",
+    alt: "Backend development illustration",
+    accent: "from-violet-500",
+    description: "Server-side logic, REST APIs, authentication, and databases.",
+    items: ["PHP", "Symfony", "Java", "REST API", "SQL", "MongoDB"],
+  },
+  {
+    title: "Tools",
+    image: "/img/tools.png",
+    alt: "Development tools illustration",
+    accent: "from-lime-300",
+    description: "Tools and workflows I use for collaboration and delivery.",
+    items: [
+      "Jira",
+      "IntelliJ IDEA",
+      "VS Code",
+      "GitHub",
+      "GitLab",
+      "Postman",
+      "PhpStorm",
+      "Figma",
+    ],
+  },
 ];

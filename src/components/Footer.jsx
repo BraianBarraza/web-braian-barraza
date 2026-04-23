@@ -1,45 +1,45 @@
 const Footer = ({ assetsBase }) => (
-  <footer className="bg-gray-100 dark:bg-gray-800 p-5">
-    <div className="text-gray-800 dark:text-white w-full max-w-screen-xl mx-auto md:py-8">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 md:space-x-6">
-        <a href="#home" className="flex items-center space-x-3 py-4 rtl:space-x-reverse">
-          <img
-            src={`${assetsBase}/icons/logo-braian.png`}
-            className="h-8 rounded-2xl"
-            alt="Braian Barraza Logo"
-          />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap">
-            Braian Barraza
-          </span>
-        </a>
-        <ul className="flex flex-col md:flex-row md:space-x-7 space-y-2 md:space-y-0 items-center text-base font-medium">
-          <li>
-            <p className="p-2">E-Mail: Braian_019@hotmail.com</p>
-          </li>
-          <li>
-            <p className="p-2">Tel: 017677668526</p>
-          </li>
-          <li className="p-2">
-            <a
-              href={`${assetsBase}/img/CV%20Braian%20Camilo%20Barraza.pdf`}
-              download
-              className="py-2 px-4 rounded-md bg-primary text-white font-bold inline-block"
-            >
-              Download CV
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <hr className="my-6 border-gray-200 dark:border-gray-700 lg:my-8" />
-        <span className="block text-sm text-gray-500 text-center dark:text-gray-400">
-          &copy; {new Date().getFullYear()}{" "}
-          <a href="#home" className="hover:underline">
-            Braian Barraza&trade;
-          </a>
-          . All Rights Reserved.
+  <footer className="border-t border-white/8 px-5 py-8">
+    <div className="mx-auto flex max-w-6xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
+      <a href="#home" className="flex items-center gap-3">
+        <img
+          src={`${assetsBase}/icons/logo-braian.png`}
+          className="h-9 w-9 rounded-lg border border-cyan-300/20"
+          alt="Braian Barraza Logo"
+        />
+        <span className="font-display font-bold text-white">
+          Braian Barraza
         </span>
+      </a>
+
+      <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-500">
+        <a
+          href="mailto:Braian_019@hotmail.com"
+          className="inline-flex items-center gap-2 transition-colors hover:text-cyan-200"
+        >
+          <i className="bx bx-envelope text-base"></i>
+          Braian_019@hotmail.com
+        </a>
+        <a
+          href="tel:+4917677668526"
+          className="inline-flex items-center gap-2 transition-colors hover:text-cyan-200"
+        >
+          <i className="bx bx-phone text-base"></i>
+          01767 7668526
+        </a>
+        <a
+          href={`${assetsBase}/img/CV%20Braian%20Camilo%20Barraza.pdf`}
+          download
+          className="inline-flex items-center gap-2 transition-colors hover:text-cyan-200"
+        >
+          <i className="bx bx-download text-base"></i>
+          Download CV
+        </a>
       </div>
+
+      <p className="text-sm text-slate-600">
+        &copy; {new Date().getFullYear()} Braian Barraza. All Rights Reserved.
+      </p>
     </div>
   </footer>
 );

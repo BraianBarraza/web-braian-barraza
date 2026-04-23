@@ -6,7 +6,7 @@ export const socialLinks = [
   },
   {
     name: "LinkedIn",
-    url: "https://www.linkedin.com/in/braian-barraza-bengal-8071a322b/",
+    url: "https://www.linkedin.com/in/braian-barraza-8071a322b/",
     icon: "/icons/linkedIn.svg",
   },
   {

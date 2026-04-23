@@ -40,6 +40,22 @@ const App = () => {
   }, [isLight]);
 
   useEffect(() => {
+    const updateSpotlight = (event) => {
+      document.documentElement.style.setProperty(
+        "--spotlight-x",
+        `${event.clientX}px`
+      );
+      document.documentElement.style.setProperty(
+        "--spotlight-y",
+        `${event.clientY}px`
+      );
+    };
+
+    window.addEventListener("pointermove", updateSpotlight);
+    return () => window.removeEventListener("pointermove", updateSpotlight);
+  }, []);
+
+  useEffect(() => {
     const sections = SECTIONS
       .map((id) => document.getElementById(id))
       .filter(Boolean);
@@ -82,7 +98,7 @@ const App = () => {
   }, [user]);
 
   return (
-    <div className="bg-white text-gray-900 dark:bg-background dark:text-white min-h-screen transition-colors duration-300">
+    <div className={`site-shell font-sans ${isLight ? "site-light" : ""}`}>
       <Header
         assetsBase={assetsBase}
         isMenuOpen={isMenuOpen}

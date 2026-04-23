@@ -1,39 +1,55 @@
-import {skills} from "../data/skills";
-import Card from "./Card";
+import { skills } from "../data/skills";
 
-const About = ({assetsBase}) => (
-    <section className="max-w-7xl mx-auto px-5 my-6" id="about">
-        <div className="text-center">
-            <p className="mb-3 font-montserrat font-medium text-gray-700 dark:text-gray-200">
-                About me
-            </p>
-            <h3 className="text-primary text-3xl font-bold mb-16">My Know How</h3>
-        </div>
-        <div className="my-16 flex flex-col md:flex-row justify-around items-center gap-12">
-            {skills.map((skill) => (
-                <Card key={skill.title} className="w-[354px] min-h-135 px-5 py-8 rounded-lg cursor-pointer">
-                    <h5 className="text-center my-5 text-2xl">{skill.title}</h5>
-                    <img
-                        src={`${assetsBase}${skill.image}`}
-                        alt={skill.alt}
-                        className="w-[196px] mb-15 mx-auto"
-                        loading="lazy"
-                    />
-                    {skill.items ? (
-                        <ul className="text-center text-gray-700 dark:text-gray-200">
-                            {skill.items.map((item) => (
-                                <li key={item}>{item}</li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p className="text-center text-gray-700 dark:text-gray-200">
-                            {skill.description}
-                        </p>
-                    )}
-                </Card>
+const About = ({ assetsBase }) => (
+  <section className="section-wrap py-24" id="about">
+    <div className="mx-auto mb-14 max-w-2xl text-center">
+      <p className="section-label mb-3">About me</p>
+      <h2 className="font-display text-[clamp(2.25rem,5vw,3.4rem)] font-extrabold text-white">
+        My <span className="grad-text">Know How</span>
+      </h2>
+      <p className="mt-5 text-slate-400">
+        A practical mix of interface craft, backend fundamentals, and the tools
+        that keep real projects moving.
+      </p>
+    </div>
+
+    <div className="grid gap-6 md:grid-cols-3">
+      {skills.map((skill) => (
+        <article
+          key={skill.title}
+          className="glass group relative overflow-hidden rounded-lg p-6 transition-transform duration-300 hover:-translate-y-1"
+        >
+          <div
+            className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${skill.accent} to-transparent`}
+          ></div>
+
+          <div className="mb-6 h-52 overflow-hidden rounded-lg bg-white/[0.03]">
+            <img
+              src={`${assetsBase}${skill.image}`}
+              alt={skill.alt}
+              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+
+          <h3 className="font-display mb-2 text-xl font-bold text-white">
+            {skill.title}
+          </h3>
+          <p className="mb-5 min-h-12 text-sm leading-6 text-slate-400">
+            {skill.description}
+          </p>
+
+          <div className="flex flex-wrap gap-2">
+            {skill.items.map((item) => (
+              <span key={item} className="skill-pill">
+                {item}
+              </span>
             ))}
-        </div>
-    </section>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
 );
 
 export default About;
