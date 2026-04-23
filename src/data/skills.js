@@ -29,7 +29,7 @@ export const skills = [
       "GitLab",
       "Postman",
       "PhpStorm",
-      "Figma",
+      "Shopware",
     ],
   },
 ];

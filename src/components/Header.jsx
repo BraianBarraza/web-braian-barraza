@@ -48,7 +48,7 @@ const Header = ({
       className={`fixed inset-x-0 top-0 transition-all duration-300 ${
         isScrolled
           ? isLight
-            ? "border-b border-slate-900/10 bg-[#f6fbff]/85 shadow-[0_18px_60px_rgba(15,23,42,0.08)] backdrop-blur-xl"
+            ? "border-b border-slate-900/10 bg-[#f8fbfc]/90 shadow-[0_18px_60px_rgba(15,23,42,0.08)] backdrop-blur-xl"
             : "border-b border-white/8 bg-[#080c10]/85 shadow-[0_18px_60px_rgba(0,0,0,0.24)] backdrop-blur-xl"
           : "bg-transparent"
       }`}
