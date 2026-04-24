@@ -23,17 +23,15 @@ const Hero = ({ assetsBase, isLight }) => {
           </h1>
 
           <p className="mb-4 text-lg text-slate-400">
-            Apprentice Application Developer @ SHD Andernach
+            Application Developer Apprentice @ SHD Andernach
           </p>
 
           <p className="mb-9 max-w-2xl text-base leading-8 text-slate-300 md:text-lg">
-            Focused on{" "}
-            <strong className="font-semibold text-white">
-              frontend development
-            </strong>{" "}
-            with JavaScript, React and Tailwind. Solid backend experience with
-            PHP and Java, and a growing taste for modern, performant web
-            products.
+            Passionate about both frontend and backend development, with
+            experience in JavaScript, Vue, React, PHP, Symfony, Java, and SQL
+            databases. I enjoy building modern, reliable web applications and
+            working with tools such as IntelliJ IDEA, PhpStorm, GitHub, GitLab,
+            and Jira.
           </p>
 
           <div className="mb-10 flex flex-wrap gap-4">
