@@ -87,15 +87,6 @@ const Header = ({
           </div>
 
           <div className="flex items-center gap-3">
-            <a
-              href={`${assetsBase}/img/CV%20Braian%20Camilo%20Barraza.pdf`}
-              download
-              className="btn-outline-modern hidden min-h-10 px-4 text-xs sm:inline-flex"
-            >
-              <i className="bx bx-download text-base"></i>
-              CV
-            </a>
-
             <button
               onClick={() => onToggleTheme(!isLight)}
               className="glass flex h-10 w-10 items-center justify-center rounded-lg text-lg text-slate-200 transition-colors hover:text-cyan-200"
@@ -145,13 +136,12 @@ const Header = ({
               {link.label}
             </a>
           ))}
-          <a
-            href={`${assetsBase}/img/CV%20Braian%20Camilo%20Barraza.pdf`}
-            download
+            <a
+            href="#contact"
+            onClick={() => onSelectSection("contact")}
             className="btn-outline-modern mt-2 sm:hidden"
           >
-            <i className="bx bx-download text-base"></i>
-            Download CV
+            Contact me
           </a>
         </div>
       </nav>
