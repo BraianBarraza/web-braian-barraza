@@ -56,7 +56,7 @@ const Projects = ({ assetsBase }) => {
   const closeProject = () => setSelectedProject(null);
 
   return (
-    <section className="section-wrap py-24" id="projects">
+    <section className="section-wrap py-16" id="projects">
       <div className="mb-14 flex flex-col gap-5 border-t border-white/8 pt-14 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="section-label mb-3">Portfolio</p>
@@ -64,8 +64,8 @@ const Projects = ({ assetsBase }) => {
             Web Development <span className="grad-text">Projects</span>
           </h2>
         </div>
-        <p className="max-w-md text-sm leading-7 text-slate-400">
-          Selected React, Vue, PHP, Symfony, Java, and database projects that
+        <p className="max-w-md text-md leading-7 text-slate-400">
+          React, Vue, PHP, Symfony, Java, and database projects that
           show practical problem solving, responsive interfaces, and efficient
           application development.
         </p>

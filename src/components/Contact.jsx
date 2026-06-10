@@ -22,7 +22,7 @@ const Contact = () => {
   };
 
   return (
-    <section className="section-wrap py-24" id="contact">
+    <section className="section-wrap py-16" id="contact">
       <div className="mx-auto max-w-3xl">
         <div className="mb-12 text-center">
           <p className="section-label mb-3">Get in touch</p>
