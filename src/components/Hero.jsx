@@ -9,13 +9,6 @@ const Hero = ({ assetsBase, isLight }) => {
     <section id="home" className="section-wrap min-h-screen pt-28">
       <div className="grid min-h-[calc(100vh-7rem)] items-center gap-12 py-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]">
         <div>
-          <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-emerald-300/20 bg-emerald-300/5 px-4 py-2">
-            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_14px_rgba(52,211,153,0.9)]"></span>
-            <span className="section-label text-emerald-300">
-              Available for work
-            </span>
-          </div>
-
           <h1 className="font-display mb-5 text-[clamp(3rem,8vw,5.8rem)] font-extrabold leading-[0.98] text-white">
             Hello, I'm
             <br />
