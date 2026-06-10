@@ -61,12 +61,13 @@ const Projects = ({ assetsBase }) => {
         <div>
           <p className="section-label mb-3">Portfolio</p>
           <h2 className="font-display text-[clamp(2.25rem,5vw,3.4rem)] font-extrabold text-white">
-            Recent <span className="grad-text">Projects</span>
+            Web Development <span className="grad-text">Projects</span>
           </h2>
         </div>
         <p className="max-w-md text-sm leading-7 text-slate-400">
-          A showcase of my work and dedication to continuous learning, building
-          practical and efficient solutions.
+          Selected React, Vue, PHP, Symfony, Java, and database projects that
+          show practical problem solving, responsive interfaces, and efficient
+          application development.
         </p>
       </div>
 

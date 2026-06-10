@@ -27,11 +27,12 @@ const Contact = () => {
         <div className="mb-12 text-center">
           <p className="section-label mb-3">Get in touch</p>
           <h2 className="font-display mb-4 text-[clamp(2.25rem,5vw,3.4rem)] font-extrabold text-white">
-            Contact <span className="grad-text">me</span>
+            Contact <span className="grad-text">Braian Barraza</span>
           </h2>
           <p className="mx-auto max-w-xl text-slate-400">
-            Send me an email if you need more information. I will get back to
-            you as soon as possible.
+            Send me an email about frontend, backend, React, Vue, PHP,
+            Symfony, Java, or SQL web development opportunities. I will get
+            back to you as soon as possible.
           </p>
         </div>
 

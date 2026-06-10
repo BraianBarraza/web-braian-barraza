@@ -5,11 +5,12 @@ const About = ({ assetsBase }) => (
     <div className="mx-auto mb-14 max-w-2xl text-center">
       <p className="section-label mb-3">About me</p>
       <h2 className="font-display text-[clamp(2.25rem,5vw,3.4rem)] font-extrabold text-white">
-        My <span className="grad-text">Know How</span>
+        Web Development <span className="grad-text">Skills</span>
       </h2>
       <p className="mt-5 text-slate-400">
-        A practical mix of interface craft, backend fundamentals, and the tools
-        that keep real projects moving.
+        A practical mix of frontend development, backend fundamentals,
+        databases, API work, and collaboration tools for shipping real web
+        projects.
       </p>
     </div>
 
