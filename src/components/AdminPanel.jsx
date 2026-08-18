@@ -22,9 +22,14 @@ import {auth, db, storage} from "../lib/firebase";
 const EMPTY_FORM = {
     title: "",
     description: "",
+    client: "",
+    engagement: "",
     technologies: "",
     features: "",
+    imageUrl: "",
+    alt: "",
     demoUrl: "",
+    linkLabel: "",
     githubUrl: "",
 };
 
@@ -87,9 +92,14 @@ const AdminPanel = ({onClose}) => {
         setForm({
             title: project.title || "",
             description: project.description || "",
+            client: project.client || "",
+            engagement: project.engagement || "",
             technologies: project.technologies || "",
             features: (project.features || []).join(", "),
+            imageUrl: project.imageUrl || "",
+            alt: project.alt || "",
             demoUrl: project.demoUrl || "",
+            linkLabel: project.linkLabel || "",
             githubUrl: project.githubUrl || "",
         });
         setEditingId(project.id);
@@ -121,12 +131,17 @@ const AdminPanel = ({onClose}) => {
             const data = {
                 title: form.title.trim(),
                 description: form.description.trim(),
+                client: form.client.trim() || null,
+                engagement: form.engagement.trim() || null,
                 technologies: form.technologies.trim(),
                 features: form.features
                     .split(",")
                     .map((f) => f.trim())
                     .filter(Boolean),
+                imageUrl: form.imageUrl.trim() || null,
+                alt: form.alt.trim() || null,
                 demoUrl: form.demoUrl.trim() || null,
+                linkLabel: form.linkLabel.trim() || null,
                 githubUrl: form.githubUrl.trim() || null,
             };
 
@@ -359,11 +374,36 @@ const AdminPanel = ({onClose}) => {
 
                             <div>
                                 <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Technologies *
+                                    Client
                                 </label>
                                 <input
                                     type="text"
-                                    required
+                                    value={form.client}
+                                    onChange={updateField("client")}
+                                    placeholder="ewolves® Consulting"
+                                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Engagement
+                                </label>
+                                <input
+                                    type="text"
+                                    value={form.engagement}
+                                    onChange={updateField("engagement")}
+                                    placeholder="Freelance Project"
+                                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Technologies
+                                </label>
+                                <input
+                                    type="text"
                                     value={form.technologies}
                                     onChange={updateField("technologies")}
                                     placeholder="React, Tailwind, Firebase"
@@ -405,13 +445,52 @@ const AdminPanel = ({onClose}) => {
 
                             <div>
                                 <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Demo URL
+                                    Image URL
+                                </label>
+                                <input
+                                    type="url"
+                                    value={form.imageUrl}
+                                    onChange={updateField("imageUrl")}
+                                    placeholder="https://..."
+                                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Image description
+                                </label>
+                                <input
+                                    type="text"
+                                    value={form.alt}
+                                    onChange={updateField("alt")}
+                                    placeholder="Accessible description of the project image"
+                                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Project URL
                                 </label>
                                 <input
                                     type="url"
                                     value={form.demoUrl}
                                     onChange={updateField("demoUrl")}
                                     placeholder="https://..."
+                                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Project link label
+                                </label>
+                                <input
+                                    type="text"
+                                    value={form.linkLabel}
+                                    onChange={updateField("linkLabel")}
+                                    placeholder="View project"
                                     className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                                 />
                             </div>
