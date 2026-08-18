@@ -26,11 +26,42 @@ const EMPTY_FORM = {
     engagement: "",
     technologies: "",
     features: "",
-    imageUrl: "",
-    alt: "",
+    images: [],
     demoUrl: "",
     linkLabel: "",
     githubUrl: "",
+};
+
+const createEmptyForm = () => ({...EMPTY_FORM, images: []});
+
+const getStoredImages = (project) => {
+    const images = project.images?.length
+        ? project.images
+        : project.imageUrl
+            ? [{
+                imageUrl: project.imageUrl,
+                imagePath: project.imagePath,
+                alt: project.alt,
+            }]
+            : [];
+
+    return images
+        .map((image, index) => {
+            if (typeof image === "string") {
+                return {
+                    imageUrl: image,
+                    imagePath: "",
+                    alt: `${project.title} preview ${index + 1}`,
+                };
+            }
+
+            return {
+                imageUrl: image.imageUrl || image.src || "",
+                imagePath: image.imagePath || "",
+                alt: image.alt || `${project.title} preview ${index + 1}`,
+            };
+        })
+        .filter((image) => image.imageUrl);
 };
 
 const AdminPanel = ({onClose}) => {
@@ -38,9 +69,8 @@ const AdminPanel = ({onClose}) => {
     const [loading, setLoading] = useState(true);
     const [formOpen, setFormOpen] = useState(false);
     const [editingId, setEditingId] = useState(null);
-    const [form, setForm] = useState(EMPTY_FORM);
-    const [imageFile, setImageFile] = useState(null);
-    const [imagePreview, setImagePreview] = useState(null);
+    const [form, setForm] = useState(createEmptyForm);
+    const [imageFiles, setImageFiles] = useState([]);
     const [saving, setSaving] = useState(false);
     const [deleting, setDeleting] = useState(null);
 
@@ -64,27 +94,17 @@ const AdminPanel = ({onClose}) => {
         return () => document.removeEventListener("keydown", handleEscape);
     }, [formOpen]);
 
-    useEffect(() => {
-        return () => {
-            if (imagePreview?.startsWith("blob:")) {
-                URL.revokeObjectURL(imagePreview);
-            }
-        };
-    }, [imagePreview]);
-
     const closeForm = () => {
         setFormOpen(false);
         setEditingId(null);
-        setForm(EMPTY_FORM);
-        setImageFile(null);
-        setImagePreview(null);
+        setForm(createEmptyForm());
+        setImageFiles([]);
     };
 
     const openAdd = () => {
-        setForm(EMPTY_FORM);
+        setForm(createEmptyForm());
         setEditingId(null);
-        setImageFile(null);
-        setImagePreview(null);
+        setImageFiles([]);
         setFormOpen(true);
     };
 
@@ -96,31 +116,78 @@ const AdminPanel = ({onClose}) => {
             engagement: project.engagement || "",
             technologies: project.technologies || "",
             features: (project.features || []).join(", "),
-            imageUrl: project.imageUrl || "",
-            alt: project.alt || "",
+            images: getStoredImages(project),
             demoUrl: project.demoUrl || "",
             linkLabel: project.linkLabel || "",
             githubUrl: project.githubUrl || "",
         });
         setEditingId(project.id);
-        setImageFile(null);
-        setImagePreview(project.imageUrl || null);
+        setImageFiles([]);
         setFormOpen(true);
     };
 
     const handleImageChange = (e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        setImageFile(file);
-        setImagePreview(URL.createObjectURL(file));
+        const files = Array.from(e.target.files || []);
+        if (files.length === 0) return;
+
+        setImageFiles((current) => [
+            ...current,
+            ...files.map((file) => ({file, alt: ""})),
+        ]);
+        e.target.value = "";
     };
 
-    const uploadImage = async (file) => {
-        const path = `projects/${Date.now()}-${file.name}`;
-        const storageRef = ref(storage, path);
-        await uploadBytes(storageRef, file);
-        const url = await getDownloadURL(storageRef);
-        return {imageUrl: url, imagePath: path};
+    const uploadImages = async (entries, title) => {
+        const uploadBatchId = Date.now();
+
+        return Promise.all(entries.map(async ({file, alt}, index) => {
+            const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "-");
+            const path = `projects/${uploadBatchId}-${index}-${safeName}`;
+            const storageRef = ref(storage, path);
+            await uploadBytes(storageRef, file);
+            const imageUrl = await getDownloadURL(storageRef);
+
+            return {
+                imageUrl,
+                imagePath: path,
+                alt: alt.trim() || `${title} preview ${index + 1}`,
+            };
+        }));
+    };
+
+    const addImageUrl = () => {
+        setForm((current) => ({
+            ...current,
+            images: [...current.images, {imageUrl: "", imagePath: "", alt: ""}],
+        }));
+    };
+
+    const updateImage = (index, field, value) => {
+        setForm((current) => ({
+            ...current,
+            images: current.images.map((image, imageIndex) =>
+                imageIndex === index ? {...image, [field]: value} : image
+            ),
+        }));
+    };
+
+    const removeImage = (index) => {
+        setForm((current) => ({
+            ...current,
+            images: current.images.filter((_, imageIndex) => imageIndex !== index),
+        }));
+    };
+
+    const updateImageFile = (index, alt) => {
+        setImageFiles((current) => current.map((entry, fileIndex) =>
+            fileIndex === index ? {...entry, alt} : entry
+        ));
+    };
+
+    const removeImageFile = (index) => {
+        setImageFiles((current) =>
+            current.filter((_, fileIndex) => fileIndex !== index)
+        );
     };
 
     const handleSave = async (e) => {
@@ -128,6 +195,16 @@ const AdminPanel = ({onClose}) => {
         setSaving(true);
 
         try {
+            const storedImages = form.images
+                .map((image, index) => ({
+                    imageUrl: image.imageUrl.trim(),
+                    imagePath: image.imagePath || "",
+                    alt: image.alt.trim() || `${form.title.trim()} preview ${index + 1}`,
+                }))
+                .filter((image) => image.imageUrl);
+            const uploadedImages = await uploadImages(imageFiles, form.title.trim());
+            const images = [...storedImages, ...uploadedImages];
+            const coverImage = images[0] || null;
             const data = {
                 title: form.title.trim(),
                 description: form.description.trim(),
@@ -138,34 +215,34 @@ const AdminPanel = ({onClose}) => {
                     .split(",")
                     .map((f) => f.trim())
                     .filter(Boolean),
-                imageUrl: form.imageUrl.trim() || null,
-                alt: form.alt.trim() || null,
+                images,
+                imageUrl: coverImage?.imageUrl || null,
+                imagePath: coverImage?.imagePath || null,
+                alt: coverImage?.alt || null,
                 demoUrl: form.demoUrl.trim() || null,
                 linkLabel: form.linkLabel.trim() || null,
                 githubUrl: form.githubUrl.trim() || null,
             };
 
             if (editingId) {
-                if (imageFile) {
-                    const existing = projects.find((p) => p.id === editingId);
-                    if (existing?.imagePath) {
-                        try {
-                            await deleteObject(ref(storage, existing.imagePath));
-                        } catch {
-                            // old image may not exist
-                        }
-                    }
-                    const img = await uploadImage(imageFile);
-                    data.imageUrl = img.imageUrl;
-                    data.imagePath = img.imagePath;
-                }
+                const existing = projects.find((project) => project.id === editingId);
                 await updateDoc(doc(db, "projects", editingId), data);
+
+                const savedPaths = new Set(
+                    images.map((image) => image.imagePath).filter(Boolean)
+                );
+                const removedPaths = getStoredImages(existing || {})
+                    .map((image) => image.imagePath)
+                    .filter((path) => path && !savedPaths.has(path));
+
+                await Promise.all(removedPaths.map(async (path) => {
+                    try {
+                        await deleteObject(ref(storage, path));
+                    } catch {
+                        // The image may already have been removed from storage.
+                    }
+                }));
             } else {
-                if (imageFile) {
-                    const img = await uploadImage(imageFile);
-                    data.imageUrl = img.imageUrl;
-                    data.imagePath = img.imagePath;
-                }
                 data.createdAt = serverTimestamp();
                 await addDoc(collection(db, "projects"), data);
             }
@@ -183,9 +260,15 @@ const AdminPanel = ({onClose}) => {
         setDeleting(project.id);
 
         try {
-            if (project.imagePath) {
+            const imagePaths = new Set(
+                getStoredImages(project)
+                    .map((image) => image.imagePath)
+                    .filter(Boolean)
+            );
+
+            for (const path of imagePaths) {
                 try {
-                    await deleteObject(ref(storage, project.imagePath));
+                    await deleteObject(ref(storage, path));
                 } catch {
                     // image may already be deleted
                 }
@@ -268,15 +351,19 @@ const AdminPanel = ({onClose}) => {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {projects.map((project) => (
+                        {projects.map((project) => {
+                            const projectImages = getStoredImages(project);
+                            const coverImage = projectImages[0];
+
+                            return (
                             <div
                                 key={project.id}
                                 className="rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 overflow-hidden"
                             >
-                                {project.imageUrl ? (
+                                {coverImage ? (
                                     <img
-                                        src={project.imageUrl}
-                                        alt={project.title}
+                                        src={coverImage.imageUrl}
+                                        alt={coverImage.alt || project.title}
                                         className="w-full h-48 object-cover"
                                     />
                                 ) : (
@@ -289,6 +376,9 @@ const AdminPanel = ({onClose}) => {
                                     <h3 className="font-bold text-lg text-gray-900 dark:text-white mb-1">
                                         {project.title}
                                     </h3>
+                                    <p className="mb-1 text-xs font-medium text-gray-400 dark:text-gray-500">
+                                        {projectImages.length} {projectImages.length === 1 ? "image" : "images"}
+                                    </p>
                                     <p className="text-sm text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">
                                         {project.technologies}
                                     </p>
@@ -315,7 +405,8 @@ const AdminPanel = ({onClose}) => {
                                     </div>
                                 </div>
                             </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 )}
             </div>
@@ -424,50 +515,109 @@ const AdminPanel = ({onClose}) => {
                                 />
                             </div>
 
-                            <div>
-                                <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Image
-                                </label>
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handleImageChange}
-                                    className="w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-primary/10 file:text-primary hover:file:bg-primary/20 file:cursor-pointer"
-                                />
-                                {imagePreview && (
-                                    <img
-                                        src={imagePreview}
-                                        alt="Preview"
-                                        className="mt-3 w-full h-40 object-cover rounded-lg"
+                            <fieldset className="space-y-4 rounded-xl border border-gray-200 p-4 dark:border-gray-700">
+                                <legend className="px-2 text-sm font-semibold text-gray-800 dark:text-gray-200">
+                                    Project images
+                                </legend>
+                                <p className="text-xs leading-5 text-gray-500 dark:text-gray-400">
+                                    The first image is used as the project cover. All images appear in the details carousel.
+                                </p>
+
+                                <div>
+                                    <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Upload image files
+                                    </label>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        multiple
+                                        onChange={handleImageChange}
+                                        className="w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-primary/10 file:text-primary hover:file:bg-primary/20 file:cursor-pointer"
                                     />
-                                )}
-                            </div>
+                                </div>
 
-                            <div>
-                                <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Image URL
-                                </label>
-                                <input
-                                    type="url"
-                                    value={form.imageUrl}
-                                    onChange={updateField("imageUrl")}
-                                    placeholder="https://..."
-                                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                                />
-                            </div>
+                                {imageFiles.map((entry, index) => (
+                                    <div
+                                        key={`${entry.file.name}-${entry.file.lastModified}-${index}`}
+                                        className="space-y-2 rounded-lg bg-gray-50 p-3 dark:bg-gray-800"
+                                    >
+                                        <div className="flex items-center justify-between gap-3">
+                                            <p className="min-w-0 truncate text-sm font-medium text-gray-700 dark:text-gray-200">
+                                                {entry.file.name}
+                                            </p>
+                                            <button
+                                                type="button"
+                                                onClick={() => removeImageFile(index)}
+                                                className="shrink-0 text-sm font-medium text-red-600 hover:text-red-700 dark:text-red-400"
+                                            >
+                                                Remove
+                                            </button>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            value={entry.alt}
+                                            onChange={(event) => updateImageFile(index, event.target.value)}
+                                            placeholder="Image description"
+                                            className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
+                                        />
+                                    </div>
+                                ))}
 
-                            <div>
-                                <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Image description
-                                </label>
-                                <input
-                                    type="text"
-                                    value={form.alt}
-                                    onChange={updateField("alt")}
-                                    placeholder="Accessible description of the project image"
-                                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                                />
-                            </div>
+                                {form.images.map((image, index) => (
+                                    <div
+                                        key={`${image.imagePath || image.imageUrl || "image"}-${index}`}
+                                        className="space-y-3 rounded-lg bg-gray-50 p-3 dark:bg-gray-800"
+                                    >
+                                        {image.imageUrl && (
+                                            <img
+                                                src={image.imageUrl}
+                                                alt={image.alt || `Project preview ${index + 1}`}
+                                                className="h-32 w-full rounded-lg object-cover"
+                                            />
+                                        )}
+                                        <div>
+                                            <label className="block mb-1 text-xs font-medium text-gray-600 dark:text-gray-400">
+                                                Image URL
+                                            </label>
+                                            <input
+                                                type="url"
+                                                value={image.imageUrl}
+                                                onChange={(event) => updateImage(index, "imageUrl", event.target.value)}
+                                                placeholder="https://..."
+                                                className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block mb-1 text-xs font-medium text-gray-600 dark:text-gray-400">
+                                                Image description
+                                            </label>
+                                            <input
+                                                type="text"
+                                                value={image.alt}
+                                                onChange={(event) => updateImage(index, "alt", event.target.value)}
+                                                placeholder="Accessible description of this image"
+                                                className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
+                                            />
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => removeImage(index)}
+                                            className="text-sm font-medium text-red-600 hover:text-red-700 dark:text-red-400"
+                                        >
+                                            Remove image
+                                        </button>
+                                    </div>
+                                ))}
+
+                                <button
+                                    type="button"
+                                    onClick={addImageUrl}
+                                    className="inline-flex items-center gap-2 rounded-lg border border-primary/30 px-3 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/10"
+                                >
+                                    <i className="bx bx-link"></i>
+                                    Add image URL
+                                </button>
+                            </fieldset>
 
                             <div>
                                 <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">

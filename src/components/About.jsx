@@ -8,9 +8,11 @@ const About = ({ assetsBase }) => (
         Development <span className="grad-text">Skills</span>
       </h2>
       <p className="mt-5 text-slate-400">
-        A practical mix of frontend development, backend fundamentals,
-        databases, API work, and collaboration tools for shipping real web
-        projects.
+        Alongside my application development apprenticeship, I also work as a
+        freelance web developer, building real interactive tools and assessment
+        platforms for clients. This experience complements my frontend,
+        backend, database, and API skills with direct responsibility for
+        delivering production-ready projects.
       </p>
     </div>
 
