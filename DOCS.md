@@ -10,6 +10,8 @@ Technical documentation for the Braian Barraza Web Portfolio.
 - [Styling & Theming](#styling--theming)
 - [Data Layer](#data-layer)
 - [Adding Content](#adding-content)
+- [Task Kanban Board](#task-kanban-board)
+- [Testing](#testing)
 - [Build & Deployment](#build--deployment)
 
 ---
@@ -234,6 +236,96 @@ Add an entry to `src/data/skills.js` with either `items` (list) or `description`
 
 1. Place the SVG icon in `public/icons/`
 2. Add an entry to `src/data/socialLinks.js`
+
+---
+
+## Task Kanban Board
+
+The admin panel has a **Tareas** tab (next to **Proyectos**) with a per-client Kanban board for tracking bugs, features, chores, and organizational tasks across freelance projects, including a time log and a resolved-tasks history view.
+
+### Where the code lives
+
+| File | Responsibility |
+|------|-----------------|
+| `src/components/tasks/taskConstants.js` | The `status` and `type` enums, with labels/colors/icons |
+| `src/components/tasks/taskUtils.js` | Pure logic: grouping, filtering, duration formatting, status-transition side effects. Unit tested. |
+| `src/lib/tasks.js` | Firestore CRUD + realtime subscription for the `tasks` collection |
+| `src/hooks/useTasks.js` | React hook wrapping the subscription |
+| `src/components/tasks/TaskBoard.jsx` | Presentational board (columns, filters, history view, drag & drop) |
+| `src/components/tasks/TaskCard.jsx` | Individual task card (badges, dates, timer, quick status move) |
+| `src/components/tasks/TaskFormModal.jsx` | Create/edit form |
+| `src/components/tasks/TasksPanel.jsx` | Wires `useTasks` + `src/lib/tasks.js` into `TaskBoard` |
+
+`TaskBoard` never talks to Firestore directly — it receives `tasks` and callback props. That keeps it testable with plain mock data and reusable outside the admin panel if needed.
+
+### Firestore schema — `tasks` collection
+
+This is the schema an AI agent (or any script) should follow when creating or updating tickets directly in Firestore, so it stays consistent with what the UI reads and writes.
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `title` | string | yes | Short task title |
+| `description` | string | no | Free text, defaults to `""` |
+| `client` | string | yes | Client name. The UI derives its client filter/autocomplete from the distinct values already in use — reuse an existing client name exactly (case-sensitive) instead of inventing a new spelling |
+| `projectId` | string \| null | no | Optional link to a document in the `projects` collection |
+| `type` | `"bug"` \| `"feature"` \| `"chore"` \| `"organizational"` | yes | Exactly one of these four string values |
+| `status` | `"pending"` \| `"in_progress"` \| `"resolved"` | yes | Kanban column |
+| `receivedAt` | Timestamp | yes | When the ticket was received/logged |
+| `startedAt` | Timestamp \| null | no | When work started |
+| `completedAt` | Timestamp \| null | no | When work finished |
+| `timeSpentMinutes` | number | yes | Total time logged, in minutes (e.g. `90` = 1h 30m) |
+| `timerStartedAt` | Timestamp \| null | no | Set while a live stopwatch is running on the card; `null` otherwise |
+| `createdAt` / `updatedAt` | Timestamp | yes | Bookkeeping, set by `src/lib/tasks.js` |
+
+### Status-transition side effects
+
+When a task's `status` changes, `src/components/tasks/taskUtils.js#applyStatusTransition` (used by `moveTaskStatus` in `src/lib/tasks.js`) applies these rules. An agent writing to Firestore directly should replicate them so the board stays coherent:
+
+1. Moving into `in_progress` for the first time sets `startedAt` to now, **only if `startedAt` is still `null`**.
+2. Moving into `resolved` sets `completedAt` to now (if not already set) and, if a timer is running (`timerStartedAt` is set), stops it — adding the elapsed time to `timeSpentMinutes` and clearing `timerStartedAt`.
+3. Moving a task **away** from `resolved` clears `completedAt` back to `null`.
+
+### Time tracking
+
+Two ways to log time, both writing to the same `timeSpentMinutes` field:
+
+- **Manual**: set `timeSpentMinutes` directly (e.g. when an AI agent already knows how long a task took).
+- **Stopwatch**: the card's play/pause button sets `timerStartedAt` on start, and on stop computes the elapsed minutes and adds them to `timeSpentMinutes`, clearing `timerStartedAt`.
+
+### Firestore security rules
+
+Rules aren't checked into this repo (they're managed in the Firebase console), but the `tasks` collection should follow the same access pattern already used for `projects`: public read (the admin panel is the only consumer today, but keep it simple) and writes restricted to authenticated users, e.g.:
+
+```
+match /tasks/{taskId} {
+  allow read: if true;
+  allow write: if request.auth != null;
+}
+```
+
+Apply this via the Firebase console → Firestore Database → Rules.
+
+---
+
+## Testing
+
+The project uses [Vitest](https://vitest.dev) with [Testing Library](https://testing-library.com) for React components.
+
+```bash
+npm test         # run the suite once
+npm run test:watch   # watch mode
+```
+
+Tests live next to the code they cover (`*.test.js` / `*.test.jsx`). `src/components/tasks/taskUtils.test.js` covers the pure Kanban logic (status transitions, filtering, duration formatting) and `src/components/tasks/TaskBoard.test.jsx` is a component smoke test using mock tasks — neither touches Firestore, since `TaskBoard` receives data via props instead of fetching it itself.
+
+### Visual preview without Firebase credentials
+
+`preview-kanban.html` + `src/dev-preview-kanban.jsx` are a second, standalone Vite entry point that mounts the Kanban board with in-memory mock data instead of Firestore, bypassing the login flow entirely. `vite build` never picks it up (only `index.html` is a build entry), so it's only reachable through the dev server. Use it to eyeball layout or interaction changes when you don't have (or don't want to use) real Firebase credentials:
+
+```bash
+npm run dev
+# open http://localhost:5173/preview-kanban.html
+```
 
 ---
 

@@ -18,6 +18,7 @@ import {
     deleteObject,
 } from "firebase/storage";
 import {auth, db, storage} from "../lib/firebase";
+import TasksPanel from "./tasks/TasksPanel";
 
 const EMPTY_FORM = {
     title: "",
@@ -65,6 +66,7 @@ const getStoredImages = (project) => {
 };
 
 const AdminPanel = ({onClose}) => {
+    const [activeTab, setActiveTab] = useState("projects");
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [formOpen, setFormOpen] = useState(false);
@@ -317,8 +319,38 @@ const AdminPanel = ({onClose}) => {
                 </div>
             </div>
 
+            {/* Tabs */}
+            <div className="max-w-7xl mx-auto px-5 pt-6">
+                <div className="inline-flex rounded-lg border border-gray-300 p-1 dark:border-gray-600">
+                    <button
+                        onClick={() => setActiveTab("projects")}
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                            activeTab === "projects"
+                                ? "bg-primary text-white"
+                                : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                        }`}
+                    >
+                        Proyectos
+                    </button>
+                    <button
+                        onClick={() => setActiveTab("tasks")}
+                        className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                            activeTab === "tasks"
+                                ? "bg-primary text-white"
+                                : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                        }`}
+                    >
+                        Tareas
+                    </button>
+                </div>
+            </div>
+
             {/* Content */}
             <div className="max-w-7xl mx-auto px-5 py-8">
+                {activeTab === "tasks" ? (
+                    <TasksPanel />
+                ) : (
+                <>
                 <div className="flex items-center justify-between mb-8">
                     <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                         Projects ({projects.length})
@@ -408,6 +440,8 @@ const AdminPanel = ({onClose}) => {
                             );
                         })}
                     </div>
+                )}
+                </>
                 )}
             </div>
 
