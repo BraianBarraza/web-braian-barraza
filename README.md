@@ -70,6 +70,7 @@ src/
 
 ## Features
 
+- **Task Kanban Board** — per-client bug/feature/chore tracking with time logging and a resolved-tasks history, in the admin panel's **Tareas** tab (see [DOCS.md](./DOCS.md#task-kanban-board))
 - **Dark / Light Theme** — class-based toggle with persistent UI state
 - **Responsive Design** — mobile-first layout with hamburger menu
 - **Smooth Scroll Navigation** — animated section indicator in header
