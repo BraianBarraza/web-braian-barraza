@@ -28,6 +28,11 @@ cd web-braian-barraza
 npm install
 ```
 
+Create `.env.local` from `.env.example` and fill in the Firebase web app
+configuration before starting the site. The public portfolio initializes
+Firebase at startup, so missing values prevent the page from rendering.
+Keep `.env.local` out of Git; it is already ignored.
+
 ### Development
 
 ```bash

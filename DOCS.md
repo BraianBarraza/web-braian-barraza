@@ -294,16 +294,15 @@ Two ways to log time, both writing to the same `timeSpentMinutes` field:
 
 ### Firestore security rules
 
-Rules aren't checked into this repo (they're managed in the Firebase console), but the `tasks` collection should follow the same access pattern already used for `projects`: public read (the admin panel is the only consumer today, but keep it simple) and writes restricted to authenticated users, e.g.:
+The complete rules based on the current Firebase Console rules are in [`firestore.rules`](./firestore.rules). The `projects` collection keeps public reads and authenticated writes. The `tasks` collection is used only in the authenticated admin panel and contains client information, so both reads and writes require authentication:
 
 ```
 match /tasks/{taskId} {
-  allow read: if true;
-  allow write: if request.auth != null;
+  allow read, write: if request.auth != null;
 }
 ```
 
-Apply this via the Firebase console → Firestore Database → Rules.
+Copy the complete contents of `firestore.rules` into Firebase Console -> Firestore Database -> Rules and publish. Alternatively, after authenticating the Firebase CLI, run `firebase deploy --only firestore:rules --project web-portfolio-c0e1f` from this directory; `firebase.json` points to the rules file. The repository file alone does not change the active Firestore rules. If the deployed rules do not allow the signed-in user to read `tasks`, opening **Tareas** fails with `Missing or insufficient permissions`.
 
 ---
 
